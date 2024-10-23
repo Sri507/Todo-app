@@ -8,9 +8,10 @@ const Todo = () => {
   const [editDescription,setEditDescription] = useState('');
   const [task,setTask] = useState([]);
   const [editId,setEditId] = useState(-1);
-
+  const url = 'https://todo-app-backend-m6di.onrender.com';
+  
   function handleSubmit(){
-    axios.post('http://localhost:8000/todos',{
+    axios.post(`${url}/todos`,{
       title:title,
       description:description,
     })
@@ -29,7 +30,7 @@ const Todo = () => {
     getItems();
   },[task])
   function getItems(){
-    axios.get('http://localhost:8000/todos')
+    axios.get(`${url}/todos`)
     .then(res=>setTask(res.data))
     .catch(err=>{
       console.log(err);
@@ -46,7 +47,7 @@ const Todo = () => {
   function handleUpdate(){
     const id = editId;
     console.log(id);
-    axios.put('http://localhost:8000/update/'+id,{
+    axios.put(`${url}/update/`+id,{
       title:editTitle,
       description:editDescription
     })
@@ -65,7 +66,7 @@ const Todo = () => {
   
   function handleDelete(id){
     if(window.confirm('Are you sure you want to delete?')){
-      axios.delete('http://localhost:8000/delete/'+id)
+      axios.delete(`${url}/delete/`+id)
       .then(res=>{
         console.log(res.status);
       })
